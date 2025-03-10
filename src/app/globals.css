@@ -1,26 +1,27 @@
-@import "tailwindcss";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #d9d9d9;
+  --foreground: #1c1c1c;
+  --heading: #3e5c76;
+  --button: #146c94;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #1c1c1c;
+  --foreground: #d9d9d9;
+  --heading: #146c94;
+  --button: #3e5c76;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-150;
+}
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
 }
