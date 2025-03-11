@@ -8,7 +8,7 @@ export default function Home() {
       
       <section className="w-[90%] h-[80%] flex flex-col justify-center items-center gap-6">
         <Loading size="lg" />
-        <p className="text-2xl text-[var(--foreground)]">We are loading...</p>
+        <p className="text-2xl text-[var(--foreground)]">Under development...</p>
       </section>
     </main>
   );

@@ -3,21 +3,21 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --background: #d9d9d9;
-  --foreground: #1c1c1c;
-  --heading: #3e5c76;
-  --button: #146c94;
+  --primary: #499b9f;
+  --secondary: #3e5c76;
+  --dark: #1c1c1c;
+  --light: #d9d9d9;
 }
 
 .dark {
-  --background: #1c1c1c;
-  --foreground: #d9d9d9;
-  --heading: #146c94;
-  --button: #3e5c76;
+  --primary: #499b9f;
+  --secondary: #3e5c76;
+  --light: #1c1c1c;
+  --dark: #d9d9d9;
 }
 
 body {
-  @apply h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-150;
+  @apply h-screen bg-[var(--light)] text-[var(--dark)] transition-colors duration-150;
 }
 
 @layer base {

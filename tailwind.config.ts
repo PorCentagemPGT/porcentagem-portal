@@ -10,10 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary': '#146C94',    // Deep Teal
-        'secondary': '#3E5C76',  // Slate Blue
-        'neutral': '#D9D9D9',    // Soft Gray
-        'dark': '#1C1C1C',       // Charcoal Black
+        primary: '#499B9F', // Deep Teal
+        secondary: '#3E5C76', // Slate Blue
+        neutral: '#D9D9D9', // Soft Gray
+        dark: '#1C1C1C', // Charcoal Black
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
