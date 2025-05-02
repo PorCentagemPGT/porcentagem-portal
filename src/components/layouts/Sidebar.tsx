@@ -2,12 +2,19 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { HomeIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, Bars2Icon, BellIcon, ChartBarIcon, Cog6ToothIcon, HomeIcon, RectangleGroupIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { classNames } from '@/utils/styles';
+import { Cog8ToothIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+  { title: "Menu", name: 'Home', href: '/home', icon: HomeIcon },
+  { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
+  { name: 'Notificações', href: '/notification', icon: BellIcon, className: 'mb-8' },
+  { title: "Ações", name: 'Minhas Categorias', href: '/categories', icon: RectangleGroupIcon },
+  { name: 'Meus Bancos', href: '/banks', icon: BanknotesIcon },
+  { name: 'Configurações', href: '/configurations', icon: Cog8ToothIcon },
 ];
 
 interface SidebarProps {
@@ -17,6 +24,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ open, setOpen }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <>
       <Transition.Root show={open} as={Fragment}>
@@ -72,48 +81,57 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
                   </div>
                 </Transition.Child>
 
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
-                  <div className="flex h-16 shrink-0 items-center">
-                    <Image
-                      src="/logo.png"
-                      alt="PorCentagem"
-                      width={32}
-                      height={32}
-                      priority
-                    />
-                  </div>
-                  <nav className="flex flex-1 flex-col">
-                    <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                      <li>
-                        <ul role="list" className="-mx-2 space-y-1">
-                          {navigation.map((item) => (
-                            <li key={item.name}>
-                              <a
-                                href={item.href}
-                                className={classNames(
-                                  item.current
-                                    ? 'bg-gray-50 text-indigo-600'
-                                    : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-                                  'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                <div className="flex grow flex-col overflow-y-auto bg-white px-6 py-4">
+                  <div className="rounded-2xl bg-gray-200 h-[calc(100vh-2rem)] p-3">
+                    <div className="flex h-16 shrink-0 items-center justify-center mb-4">
+                      <Image
+                        src="/logo.png"
+                        alt="PorCentagem"
+                        width={40}
+                        height={40}
+                        priority
+                        className="mb-2"
+                      />
+                    </div>
+                    <nav className="flex flex-1 flex-col">
+                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                        <li>
+                          <ul role="list" className="-mx-2 space-y-1">
+                            {navigation.map((item) => (
+                              <li key={item.name}>
+                                {item.title && (
+                                  <div className="px-2 py-1 text-xs font-medium text-gray-500">
+                                    {item.title}
+                                  </div>
                                 )}
-                              >
-                                <item.icon
+                                <a
+                                  href={item.href}
                                   className={classNames(
-                                    item.current
+                                    pathname === item.href
                                       ? 'text-indigo-600'
-                                      : 'text-gray-400 group-hover:text-indigo-600',
-                                    'h-6 w-6 shrink-0'
+                                      : 'text-gray-700 hover:text-indigo-600',
+                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                                    item.className || ''
                                   )}
-                                  aria-hidden="true"
-                                />
-                                {item.name}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </li>
-                    </ul>
-                  </nav>
+                                >
+                                  <item.icon
+                                    className={classNames(
+                                      pathname === item.href
+                                        ? 'text-indigo-600'
+                                        : 'text-gray-400 group-hover:text-indigo-600',
+                                      'h-6 w-6 shrink-0'
+                                    )}
+                                    aria-hidden="true"
+                                  />
+                                  {item.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -123,48 +141,57 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
 
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-          <div className="flex h-16 shrink-0 items-center">
-            <Image
-              src="/logo.png"
-              alt="PorCentagem"
-              width={32}
-              height={32}
-              priority
-            />
-          </div>
-          <nav className="flex flex-1 flex-col">
-            <ul role="list" className="flex flex-1 flex-col gap-y-7">
-              <li>
-                <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-50 text-indigo-600'
-                            : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-                          'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+        <div className="flex grow flex-col overflow-y-auto border-r border-gray-200 bg-white px-6 py-4">
+          <div className="rounded-2xl bg-gray-200 h-[calc(100vh-2rem)] p-3">
+            <div className="flex h-16 shrink-0 items-center justify-center mb-4">
+              <Image
+                src="/logo.png"
+                alt="PorCentagem"
+                width={40}
+                height={40}
+                priority
+                className="mb-2"
+              />
+            </div>
+            <nav className="flex flex-1 flex-col">
+              <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                <li>
+                  <ul role="list" className="-mx-2 space-y-1">
+                    {navigation.map((item) => (
+                      <li key={item.name}>
+                        {item.title && (
+                          <div className="px-2 py-1 text-xs font-medium text-black">
+                            {item.title}
+                          </div>
                         )}
-                      >
-                        <item.icon
+                        <a
+                          href={item.href}
                           className={classNames(
-                            item.current
-                              ? 'text-indigo-600'
-                              : 'text-gray-400 group-hover:text-indigo-600',
-                            'h-6 w-6 shrink-0'
+                            pathname === item.href
+                              ? 'text-gray-500'
+                              : 'text-gray-700 hover:text-indigo-600',
+                            'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                            item.className || ''
                           )}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-          </nav>
+                        >
+                          <item.icon
+                            className={classNames(
+                              pathname === item.href
+                                ? 'text-gray-500'
+                                : 'text-black group-hover:text-gray-500',
+                              'h-6 w-6 shrink-0'
+                            )}
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </>
