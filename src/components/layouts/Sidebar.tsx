@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { BanknotesIcon, Bars2Icon, BellIcon, ChartBarIcon, Cog6ToothIcon, HomeIcon, RectangleGroupIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, BellIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { classNames } from '@/utils/styles';
 import { Cog8ToothIcon } from '@heroicons/react/24/outline';

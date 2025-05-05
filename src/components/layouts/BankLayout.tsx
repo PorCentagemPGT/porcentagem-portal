@@ -1,12 +1,12 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
+// import { Menu, Transition } from '@headlessui/react';
+// import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { AuthService } from '@/services/auth.service';
 import { Sidebar } from '@/components/layouts/Sidebar';
-import { classNames } from '@/utils/styles';
+// import { classNames } from '@/utils/styles';
 
 export function BankLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
