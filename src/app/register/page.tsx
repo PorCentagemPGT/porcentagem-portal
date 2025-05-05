@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { AuthLayout } from '@/components/auth/auth-layout';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -29,35 +29,29 @@ export default function LoginPage() {
 
     const formData = new FormData(event.currentTarget);
     const data = {
+      name: formData.get('name') as string,
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     };
 
     try {
-      const response = await AuthService.signIn(data);
+      const response = await AuthService.signUp(data);
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || 'Failed to login');
+        throw new Error(error.message || 'Failed to register');
       }
-
-      const result = await response.json();
-      
-      AuthService.saveAuth({
-        tokens: result.tokens,
-        user: result.user,
-      });
 
       toast({
         title: 'Success',
-        description: 'Welcome back!',
+        description: 'Your account has been created. Please sign in.',
       });
 
-      router.push('/dashboard');
+      router.push('/login');
     } catch (error) {
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to login. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to register. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -69,14 +63,24 @@ export default function LoginPage() {
     <AuthLayout>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Welcome back</CardTitle>
+          <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account
+            Enter your information to create your account
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
             <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="John Doe"
+                  required
+                  disabled={loading}
+                />
+              </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -102,12 +106,12 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
             <Button className="w-full" type="submit" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? 'Creating account...' : 'Create account'}
             </Button>
             <p className="text-sm text-muted-foreground">
-              Don&apos;t have an account?{' '}
-              <Link href="/register" className="text-primary hover:underline">
-                Sign up
+              Already have an account?{' '}
+              <Link href="/login" className="text-primary hover:underline">
+                Sign in
               </Link>
             </p>
           </CardFooter>

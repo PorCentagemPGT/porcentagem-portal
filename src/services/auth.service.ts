@@ -32,6 +32,16 @@ export class AuthService {
     });
   }
 
+  static async signUp(data: { name: string; email: string; password: string }): Promise<Response> {
+    return fetch(`${API_URL}/auth/sign-up`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
   static saveAuth(auth: AuthState): void {
     if (!isBrowser) return;
     localStorage.setItem(this.AUTH_KEY, JSON.stringify(auth));

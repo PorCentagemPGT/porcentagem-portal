@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
+import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from "../components/ThemeProvider";
 import './globals.css'
 
@@ -20,10 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
+    <html lang="pt-BR" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="antialiased">
         <ThemeProvider>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
