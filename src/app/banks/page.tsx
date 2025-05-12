@@ -57,7 +57,7 @@ export default function BankPage() {
   };
 
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
       <BankLayout>
         <div className="rounded-2xl bg-white shadow mt-2">
           <div className="px-40 py-3 sm:p-6">
@@ -134,6 +134,6 @@ export default function BankPage() {
           </div>
         </div>
       </BankLayout>
-    </PrivateRoute>
+    // </PrivateRoute>
   );
 }

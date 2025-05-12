@@ -101,7 +101,7 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full" type="submit" disabled={loading}>
+            <Button className="w-full" type="submit" disabled={loading} variant={"gradient"}>
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
             <p className="text-sm text-muted-foreground">
