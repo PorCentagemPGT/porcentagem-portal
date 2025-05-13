@@ -15,23 +15,23 @@ const bankData = {
   totalAccounts: 3,
   period: 'Mês Atual',
   banks: [
-    { 
-      id: 1, 
+    {
+      id: 1,
       name: 'Nubank',
       logo: '/bank-logos/nu.png',
-      status: 'Ativo' 
+      status: 'Ativo'
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       name: 'Banco do Brasil',
       logo: '/bank-logos/bb.png',
-      status: 'Ativo' 
+      status: 'Ativo'
     },
-    { 
-      id: 3, 
+    {
+      id: 3,
       name: 'Itaú',
       logo: '/bank-logos/ita.png',
-      status: 'Inativo' 
+      status: 'Inativo'
     }
   ]
 };
@@ -42,7 +42,7 @@ interface BankStatuses {
 }
 
 export default function BankPage() {
-  const [bankStatuses, setBankStatuses] = useState<BankStatuses>(() => 
+  const [bankStatuses, setBankStatuses] = useState<BankStatuses>(() =>
     bankData.banks.reduce((acc, bank) => ({
       ...acc,
       [bank.id]: bank.status === 'Ativo'
@@ -57,7 +57,7 @@ export default function BankPage() {
   };
 
   return (
-    // <PrivateRoute>
+    <PrivateRoute>
       <BankLayout>
         <div className="rounded-2xl bg-white shadow mt-2">
           <div className="px-40 py-3 sm:p-6">
@@ -134,6 +134,6 @@ export default function BankPage() {
           </div>
         </div>
       </BankLayout>
-    // </PrivateRoute>
+    </PrivateRoute>
   );
 }
