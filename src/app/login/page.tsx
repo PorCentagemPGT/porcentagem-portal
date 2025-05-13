@@ -42,7 +42,7 @@ export default function LoginPage() {
       }
 
       const result = await response.json();
-      
+
       AuthService.saveAuth({
         tokens: result.tokens,
         user: result.user,
