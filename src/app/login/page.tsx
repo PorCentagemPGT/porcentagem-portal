@@ -42,7 +42,7 @@ export default function LoginPage() {
       }
 
       const result = await response.json();
-      
+
       AuthService.saveAuth({
         tokens: result.tokens,
         user: result.user,
@@ -101,7 +101,7 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full" type="submit" disabled={loading} variant={"gradient"}>
+            <Button className="w-full" type="submit" disabled={loading}>
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
             <p className="text-sm text-muted-foreground">
