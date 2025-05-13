@@ -35,19 +35,14 @@ export default function RegisterPage() {
     };
 
     try {
-      const response = await AuthService.signUp(data);
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to register');
-      }
+      await AuthService.signUp(data);
 
       toast({
         title: 'Success',
-        description: 'Your account has been created. Please sign in.',
+        description: 'Your account has been created. Welcome!',
       });
 
-      router.push('/login');
+      router.push('/dashboard');
     } catch (error) {
       toast({
         title: 'Error',

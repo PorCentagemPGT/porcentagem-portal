@@ -22,8 +22,11 @@ export class AuthService {
   private static readonly AUTH_KEY = '@porcentagem:auth';
   private static readonly TOKEN_EXPIRY_MARGIN = 60; // segundos
 
-  static async signIn(credentials: { email: string; password: string }): Promise<Response> {
-    return fetch(`${API_URL}/auth/sign-in`, {
+  static async signIn(credentials: {
+    email: string;
+    password: string;
+  }): Promise<Response> {
+    return fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,14 +35,28 @@ export class AuthService {
     });
   }
 
-  static async signUp(data: { name: string; email: string; password: string }): Promise<Response> {
-    return fetch(`${API_URL}/auth/sign-up`, {
+  static async signUp(data: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<AuthState> {
+    const response = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to register');
+    }
+
+    const { user, tokens } = await response.json();
+    const auth: AuthState = { user, tokens };
+    this.saveAuth(auth);
+    return auth;
   }
 
   static saveAuth(auth: AuthState): void {
@@ -49,7 +66,7 @@ export class AuthService {
 
   static getAuth(): AuthState | null {
     if (!isBrowser) return null;
-    
+
     const auth = localStorage.getItem(this.AUTH_KEY);
     if (!auth) return null;
 
@@ -91,7 +108,7 @@ export class AuthService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${refreshToken}`,
         },
       });
     } finally {
@@ -106,7 +123,7 @@ export class AuthService {
     try {
       const response = await fetch(`${API_URL}/auth/validate`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -136,7 +153,7 @@ export class AuthService {
 
       const { tokens } = await response.json();
       const currentAuth = this.getAuth();
-      
+
       if (currentAuth) {
         this.saveAuth({
           ...currentAuth,
