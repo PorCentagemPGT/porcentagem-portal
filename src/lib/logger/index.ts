@@ -1,72 +1,49 @@
-import { createLogger, format, transports } from 'winston';
-import { defaultLogConfig, LogConfig, logLevels } from './config';
+type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'http';
 
 class Logger {
   private static instance: Logger;
-  private logger: ReturnType<typeof createLogger>;
-  private config: LogConfig = defaultLogConfig;
 
-  private constructor() {
-    this.logger = this.createLogger();
-  }
+  private constructor() {}
 
-  private createLogger() {
-    return createLogger({
-      levels: logLevels,
-      level: this.config.level,
-      format: format.combine(
-        format.timestamp(),
-        format.json(),
-      ),
-      transports: [
-        new transports.Console({
-          format: format.combine(
-            format.colorize(),
-            format.printf(({ timestamp, level, message, ...meta }) => {
-              const metaString = Object.keys(meta).length ? `\n${JSON.stringify(meta, null, 2)}` : '';
-              return `${timestamp} [${level}]: ${message}${metaString}`;
-            }),
-          ),
-        }),
-      ],
-    });
-  }
-
-  public static getInstance(): Logger {
+  static getInstance(): Logger {
     if (!Logger.instance) {
       Logger.instance = new Logger();
     }
     return Logger.instance;
   }
 
-  public configure(config: Partial<LogConfig>) {
-    this.config = { ...this.config, ...config };
-    this.logger = this.createLogger();
+  private formatMessage(level: LogLevel, message: string, meta?: Record<string, unknown>): string {
+    const timestamp = new Date().toISOString();
+    return JSON.stringify({
+      timestamp,
+      level,
+      message,
+      ...meta,
+    });
   }
 
-  public error(message: string, meta?: object) {
-    if (!this.config.enabled) return;
-    this.logger.error(message, meta);
+  debug(message: string, meta?: Record<string, unknown>): void {
+    if (process.env.NODE_ENV !== 'production') {
+      console.debug(this.formatMessage('debug', message, meta));
+    }
   }
 
-  public warn(message: string, meta?: object) {
-    if (!this.config.enabled) return;
-    this.logger.warn(message, meta);
+  info(message: string, meta?: Record<string, unknown>): void {
+    console.info(this.formatMessage('info', message, meta));
   }
 
-  public info(message: string, meta?: object) {
-    if (!this.config.enabled) return;
-    this.logger.info(message, meta);
+  warn(message: string, meta?: Record<string, unknown>): void {
+    console.warn(this.formatMessage('warn', message, meta));
   }
 
-  public http(message: string, meta?: object) {
-    if (!this.config.enabled) return;
-    this.logger.http(message, meta);
+  error(message: string, meta?: Record<string, unknown>): void {
+    console.error(this.formatMessage('error', message, meta));
   }
 
-  public debug(message: string, meta?: object) {
-    if (!this.config.enabled) return;
-    this.logger.debug(message, meta);
+  http(message: string, meta?: Record<string, unknown>): void {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(this.formatMessage('http', message, meta));
+    }
   }
 }
 

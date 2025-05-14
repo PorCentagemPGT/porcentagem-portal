@@ -2,6 +2,7 @@
 
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
+import { BelvoConnectCard } from '@/components/belvo/BelvoConnectCard';
 
 export default function DashboardPage() {
   return (
@@ -87,6 +88,9 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+
+          {/* Belvo Connect Card */}
+          <BelvoConnectCard />
         </div>
       </DashboardLayout>
     </PrivateRoute>

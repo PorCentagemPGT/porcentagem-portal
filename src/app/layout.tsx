@@ -22,6 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <head>
+        <script src="https://cdn.belvo.io/belvo-widget-1-stable.js" defer></script>
+      </head>
       <body className="antialiased">
         <ThemeProvider>
           {children}
