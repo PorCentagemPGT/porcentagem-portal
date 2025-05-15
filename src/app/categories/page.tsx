@@ -125,7 +125,7 @@ export default function CategoryPage() {
     }, [filterText, sortField, sortDirection]);
 
   return (
-    // <PrivateRoute>
+    <PrivateRoute>
       <CategoryLayout>
         <Card className="mt-2 shadow rounded-2xl" style={{ backgroundColor: '#169DA0' }}>
           <CardHeader className="px-10 py-6">
@@ -317,6 +317,6 @@ export default function CategoryPage() {
         </BaseModal>
 
       </CategoryLayout>
-    // </PrivateRoute>
+    </PrivateRoute>
   );
 }
