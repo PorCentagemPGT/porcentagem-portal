@@ -8,7 +8,6 @@ import { logger } from '@/lib/logger';
 import { Loader2 } from 'lucide-react';
 
 import type { BelvoError, BelvoEvent } from '@/types/belvo';
-import '@/types/belvo';
 
 export function BelvoConnectButton() {
   const [isLoading, setIsLoading] = useState(false);
