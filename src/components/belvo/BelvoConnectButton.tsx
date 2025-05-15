@@ -7,39 +7,8 @@ import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/lib/logger';
 import { Loader2 } from 'lucide-react';
 
-interface BelvoEvent {
-  eventName: 'ERROR' | 'WARNING' | 'PAGE_LOAD';
-  request_id?: string;
-  meta_data: {
-    error_code?: string;
-    error_message?: string;
-    warning_code?: string;
-    warning_message?: string;
-    page?: string;
-    from?: string;
-    institution_name?: string;
-    timestamp?: string;
-  };
-}
-
-interface BelvoWidgetOptions {
-  callback?: (link: { id: string }, institution: { name: string }) => void;
-  onError?: (error: Error) => void;
-  onEvent?: (data: BelvoEvent) => void;
-  onExit?: () => void;
-  locale?: string;
-  institution_types?: string[];
-}
-
-declare global {
-  interface Window {
-    BelvoSDK: new () => {
-      createWidget: (token: string, options: BelvoWidgetOptions) => {
-        build: () => void;
-      };
-    };
-  }
-}
+import type { BelvoError, BelvoEvent } from '@/types/belvo';
+import '@/types/belvo';
 
 export function BelvoConnectButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +16,7 @@ export function BelvoConnectButton() {
 
   const loadBelvoScript = () => {
     return new Promise<void>((resolve, reject) => {
-      if (window.BelvoSDK) {
+      if (window.belvoSDK) {
         return resolve();
       }
   
@@ -74,25 +43,23 @@ export function BelvoConnectButton() {
       setIsLoading(true);
       const { token } = await BelvoService.getWidgetToken();
       logger.info('Token obtido, inicializando widget Belvo');
-      logger.info('Verificando disponibilidade de window.BelvoSDK', { sdk: window.BelvoSDK });
-
+      logger.info('Verificando disponibilidade de window.belvoSDK', { sdk: window.belvoSDK });
 
       logger.info('Carregando script Belvo...');
       await loadBelvoScript();
       logger.info('Script Belvo carregado, verificando belvoSDK...');
 
+      logger.info('Verificando disponibilidade de window.belvoSDK', { sdk: window.belvoSDK });
 
-      logger.info('Verificando disponibilidade de window.BelvoSDK', { sdk: window.BelvoSDK });
-
-      if (typeof window === 'undefined' || typeof (window as any).belvoSDK?.createWidget !== 'function') {
+      if (typeof window === 'undefined' || !window.belvoSDK?.createWidget) {
         logger.error('belvoSDK.createWidget não disponível após carregamento');
         throw new Error('belvoSDK ainda não disponível após carregamento');
       }
       
 
-      logger.info('window.belvoSDK:', { belvoSDK: (window as any).belvoSDK });
+      logger.info('window.belvoSDK:', { belvoSDK: window.belvoSDK });
 
-      const belvoWidget = (window as any).belvoSDK.createWidget(token, {
+      const belvoWidget = window.belvoSDK.createWidget(token, {
         callback: async (link: { id: string }, institution: { name: string }) => {
           await BelvoService.linkAccount(link.id);
           toast({
@@ -114,7 +81,7 @@ export function BelvoConnectButton() {
             description: 'Você cancelou a conexão bancária.',
           });
         },
-        onEvent: (event: any) => {
+        onEvent: (event: BelvoEvent) => {
           logger.info('Evento do widget Belvo', { event });
         },
         locale: 'pt',
@@ -122,12 +89,13 @@ export function BelvoConnectButton() {
       });
       belvoWidget.build();
       
-    } catch (error: any) {
-      logger.error('Erro ao conectar com Belvo', { error });
+    } catch (error) {
+      const belvoError = error as BelvoError;
+      logger.error('Erro ao conectar com Belvo', { error: belvoError });
     
       toast({
         title: 'Erro',
-        description: error?.message || 'Não foi possível iniciar o processo de conexão.',
+        description: belvoError.message || 'Não foi possível iniciar o processo de conexão.',
         variant: 'destructive',
       });
     }

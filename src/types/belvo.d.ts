@@ -1,4 +1,18 @@
-interface BelvoEvent {
+declare global {
+  interface Window {
+    belvoSDK: {
+      createWidget: (token: string, options: BelvoWidgetOptions) => BelvoWidget;
+    };
+  }
+}
+
+export interface BelvoError extends Error {
+  type: string;
+  message: string;
+  code?: string;
+}
+
+export interface BelvoEvent {
   eventName: 'ERROR' | 'WARNING' | 'PAGE_LOAD';
   request_id?: string;
   meta_data: {
@@ -13,21 +27,15 @@ interface BelvoEvent {
   };
 }
 
-interface BelvoWidgetOptions {
+export interface BelvoWidget {
+  build: () => void;
+}
+
+export interface BelvoWidgetOptions {
   callback?: (link: { id: string }, institution: { name: string }) => void;
   onError?: (error: Error) => void;
   onEvent?: (data: BelvoEvent) => void;
   onExit?: () => void;
   locale?: string;
   institution_types?: string[];
-}
-
-interface BelvoSDK {
-  createWidget: (token: string, options: BelvoWidgetOptions) => {
-    build: () => void;
-  };
-}
-
-interface Window {
-  BelvoSDK: new () => BelvoSDK;
 }
