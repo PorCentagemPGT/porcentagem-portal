@@ -6,7 +6,7 @@ import { Toggle } from '@/components/ui/Toggle';
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowUpDown, Trash, MoreVertical, SquarePen, ChevronDown } from 'lucide-react';
+import { ArrowUpDown, Trash, MoreVertical, SquarePen } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -19,11 +19,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/components/ui/DropdownMenu'
+} from '@/components/ui/DropdownMenu';
 import { hexToRgba } from '@/utils/hexToRgba';
 import { deleteCategory } from '@/http/core/deleteCategory';
 import { BaseModal } from '@/components/ui/BaseModal';
-
 
 const userData = {
   name: 'João da Silva',
@@ -33,38 +32,15 @@ const userData = {
 const categoryData = {
   totalAccounts: 3,
   categories: [
-    {
-      id: 1,
-      name: 'Alimentação',
-      color: '#2563EB',
-      status: 'Ativo'
-    },
-    {
-      id: 2,
-      name: 'Games',
-      color: '#047857',
-      status: 'Ativo'
-    },
-    {
-      id: 3,
-      name: 'Casa',
-      color: '#A16207',
-      status: 'Desativado'
-    }
+    { id: 1, name: 'Alimentação', color: '#2563EB', status: 'Ativo' },
+    { id: 2, name: 'Games', color: '#047857', status: 'Ativo' },
+    { id: 3, name: 'Casa', color: '#A16207', status: 'Desativado' },
   ]
 };
-
 
 interface CategoryStatuses {
   [key: number]: boolean;
 }
-
-const colorOptions = [
-  { label: 'Azul', value: '#2563EB' },
-  { label: 'Verde', value: '#047857' },
-  { label: 'Amarelo', value: '#A16207' },
-  { label: 'Vermelho', value: '#DC2626' },
-];
 
 export default function CategoryPage() {
   const [categoryStatuses, setCategoryStatuses] = useState<CategoryStatuses>(() =>
@@ -97,7 +73,6 @@ export default function CategoryPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedColorLabel, setSelectedColorLabel] = useState<string | null>("selecione uma cor");
 
   const handleCreateCategory = () => {
     setEditingCategoryId(null);
@@ -109,20 +84,20 @@ export default function CategoryPage() {
     setModalOpen(true);
   };
 
-    const filteredCategories = useMemo(() => {
-      return [...categoryData.categories]
-        .filter(category =>
-          category.name.toLowerCase().includes(filterText.toLowerCase())
-        )
-        .sort((a, b) => {
-          if (!sortField) return 0;
-          const aValue = a[sortField]?.toString().toLowerCase() || '';
-          const bValue = b[sortField]?.toString().toLowerCase() || '';
-          if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-          if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-          return 0;
-        });
-    }, [filterText, sortField, sortDirection]);
+  const filteredCategories = useMemo(() => {
+    return [...categoryData.categories]
+      .filter(category =>
+        category.name.toLowerCase().includes(filterText.toLowerCase())
+      )
+      .sort((a, b) => {
+        if (!sortField) return 0;
+        const aValue = a[sortField]?.toString().toLowerCase() || '';
+        const bValue = b[sortField]?.toString().toLowerCase() || '';
+        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+  }, [filterText, sortField, sortDirection]);
 
   return (
     // <PrivateRoute>
@@ -130,9 +105,7 @@ export default function CategoryPage() {
         <Card className="mt-2 shadow rounded-2xl" style={{ backgroundColor: '#169DA0' }}>
           <CardHeader className="px-10 py-6">
             <div className="flex justify-between items-center w-full">
-              <CardTitle className="text-base font-semibold text-white">
-                Categorias
-              </CardTitle>
+              <CardTitle className="text-base font-semibold text-white">Categorias</CardTitle>
               <div className="text-right">
                 <span className="block text-base text-white">{userData.name}</span>
                 <CardDescription className="text-sm text-white">{userData.email}</CardDescription>
@@ -140,7 +113,6 @@ export default function CategoryPage() {
             </div>
           </CardHeader>
         </Card>
-
 
         <div className="grid grid-cols-5 gap-8 mt-14">
           <Card className="col-span-4">
@@ -159,21 +131,23 @@ export default function CategoryPage() {
           </Card>
         </div>
 
-        <div className="w-1/5 mt-14">
-          <Button className="w-full" onClick={handleCreateCategory}>
-            Criar nova categoria
-          </Button>
-        </div>
+        <div className="flex items-start gap-6 mt-14">
+          <div className="w-1/5">
+            <Button className="w-full" onClick={handleCreateCategory}>
+              Criar nova categoria
+            </Button>
+          </div>
 
-        <div className="w-1/3 mt-14">
+          <div className="w-1/3">
             <Input
               type="text"
-              placeholder="Filter lines..."
+              placeholder="Filtrar categorias..."
               className="w-full"
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
             />
           </div>
+        </div>
 
         <Card className="mt-8">
           <CardHeader className="px-5 py-5 border-b border-gray-200">
@@ -185,8 +159,7 @@ export default function CategoryPage() {
                 Categoria
                 <ArrowUpDown
                   size={14}
-                  className={`ml-1 ${sortField === "name" ? "text-black" : "text-gray-400"
-                    }`}
+                  className={`ml-1 ${sortField === "name" ? "text-black" : "text-gray-400"}`}
                 />
               </button>
 
@@ -197,8 +170,7 @@ export default function CategoryPage() {
                 Status
                 <ArrowUpDown
                   size={14}
-                  className={`ml-1 ${sortField === "status" ? "text-black" : "text-gray-400"
-                    }`}
+                  className={`ml-1 ${sortField === "status" ? "text-black" : "text-gray-400"}`}
                 />
               </button>
             </div>
@@ -206,10 +178,7 @@ export default function CategoryPage() {
 
           <CardContent className="divide-y divide-gray-200">
             {filteredCategories.map((category) => (
-              <div
-                key={category.id}
-                className="grid grid-cols-3 py-3 items-center"
-              >
+              <div key={category.id} className="grid grid-cols-3 py-3 items-center">
                 <div className="flex items-center justify-start">
                   <span
                     className="text-sm font-medium px-3 py-1 rounded-full"
@@ -223,16 +192,11 @@ export default function CategoryPage() {
                 </div>
 
                 <div className="flex items-center justify-center w-full gap-2 ml-9">
-                  <div>
-                    <Toggle
-                      enabled={categoryStatuses[category.id]}
-                      onChange={() => handleToggle(category.id)}
-                    />
-                  </div>
-                  <span
-                    className={`text-sm w-[80px] text-left ${categoryStatuses[category.id]
-                      }`}
-                  >
+                  <Toggle
+                    enabled={categoryStatuses[category.id]}
+                    onChange={() => handleToggle(category.id)}
+                  />
+                  <span className="text-sm w-[80px] text-left">
                     {categoryStatuses[category.id] ? "Ativo" : "Desativado"}
                   </span>
                 </div>
@@ -245,20 +209,16 @@ export default function CategoryPage() {
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() => {
-                          setTimeout(() => editarCategoria(category.id), 0);
-                        }}
-                      >
+                      <DropdownMenuItem onClick={() => editarCategoria(category.id)}>
                         <SquarePen size={14} className="mr-2" />
-                        Edit
+                        Editar
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => deleteCategory(category.id)}
                         className="text-red-500"
                       >
                         <Trash size={14} className="mr-2" />
-                        Delete
+                        Deletar
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -277,46 +237,14 @@ export default function CategoryPage() {
             setModalOpen(false);
           }}
         >
-          {/* Nome da categoria */}
           <div className="mt-10 w-full">
             <label className="text-sm font-medium text-gray-700">
               Nome da Categoria<span className="text-red-500">*</span>
             </label>
             <Input placeholder="digite..." className="w-full mt-1" />
           </div>
-
-          {/* Dropdown para selecionar cor */}
-          <div className="mt-5 w-full">
-            <label className="text-sm font-medium text-gray-700">
-              Selecione uma cor<span className="text-red-500">*</span>
-            </label>
-            <div className="mt-1">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full flex items-center justify-between">
-                    <span className={selectedColor === null ? "text-muted-foreground" : ""}>{selectedColorLabel}</span>
-                    <ChevronDown className="w-4 h-4 ml-2 text-gray-500" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  {colorOptions.map((color) => (
-                    <DropdownMenuItem
-                      key={color.value}
-                      onSelect={() => {
-                        setSelectedColor(color.value);
-                        setSelectedColorLabel(color.label);
-                      }}
-                    >
-                      {color.label}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
         </BaseModal>
-
       </CategoryLayout>
-    // </PrivateRoute>
+   // </PrivateRoute>
   );
 }
