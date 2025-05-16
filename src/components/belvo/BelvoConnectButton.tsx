@@ -59,13 +59,16 @@ export function BelvoConnectButton() {
       logger.info('window.belvoSDK:', { belvoSDK: window.belvoSDK });
 
       const belvoWidget = window.belvoSDK.createWidget(token, {
-        callback: async (linkId: string, institutionName: string) => {
+        callback: async (link: string | { id: string }, institution: string | { name: string }) => {
+          const linkId = typeof link === 'string' ? link : link?.id;
+          const institutionName = typeof institution === 'string' ? institution : institution?.name ?? 'Instituição desconhecida';
+
           logger.info('Conta conectada com sucesso', { linkId: linkId, institutionName: institutionName });
           await BelvoService.linkAccount(linkId);
           logger.info('Conta vinculada com sucesso', { linkId: linkId, institutionName: institutionName });
           toast({
             title: 'Conta conectada com sucesso!',
-            description: `Sua conta do ${institution.name} foi conectada.`,
+            description: `Sua conta do ${institutionName} foi conectada.`,
           });
         },
         onError: (error: Error) => {

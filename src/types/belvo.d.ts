@@ -32,7 +32,10 @@ export interface BelvoWidget {
 }
 
 export interface BelvoWidgetOptions {
-  callback?: (linkId: string, institutionName: string) => void;
+  callback?: (
+    link: string | { id: string },
+    institution: string | { name: string }
+  ) => void;
   onError?: (error: Error) => void;
   onEvent?: (data: BelvoEvent) => void;
   onExit?: () => void;
