@@ -59,8 +59,10 @@ export function BelvoConnectButton() {
       logger.info('window.belvoSDK:', { belvoSDK: window.belvoSDK });
 
       const belvoWidget = window.belvoSDK.createWidget(token, {
-        callback: async (link: { id: string }, institution: { name: string }) => {
-          await BelvoService.linkAccount(link.id);
+        callback: async (linkId: string, institutionName: string) => {
+          logger.info('Conta conectada com sucesso', { linkId: linkId, institutionName: institutionName });
+          await BelvoService.linkAccount(linkId);
+          logger.info('Conta vinculada com sucesso', { linkId: linkId, institutionName: institutionName });
           toast({
             title: 'Conta conectada com sucesso!',
             description: `Sua conta do ${institution.name} foi conectada.`,
@@ -81,7 +83,19 @@ export function BelvoConnectButton() {
           });
         },
         onEvent: (event: BelvoEvent) => {
-          logger.info('Evento do widget Belvo', { event });
+          const { eventName, request_id, meta_data } = event;
+          logger.info('Evento do widget Belvo', {
+            eventName,
+            request_id,
+            meta_data,
+          });
+
+          if (eventName === 'ERROR') {
+            logger.error('Erro no widget Belvo', {
+              error_code: meta_data.error_code,
+              error_message: meta_data.error_message,
+            });
+          }
         },
         locale: 'pt',
         institution_types: ['retail'],
