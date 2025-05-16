@@ -6,6 +6,7 @@ import { BelvoService } from '@/services/belvo.service';
 import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/lib/logger';
 import { Loader2 } from 'lucide-react';
+import { AuthService } from '@/services/auth.service';
 
 import type { BelvoError, BelvoEvent } from '@/types/belvo';
 
@@ -64,7 +65,22 @@ export function BelvoConnectButton() {
           const institutionName = typeof institution === 'string' ? institution : institution?.name ?? 'Instituição desconhecida';
 
           logger.info('Conta conectada com sucesso', { linkId: linkId, institutionName: institutionName });
-          await BelvoService.linkAccount(linkId);
+          
+          if (!AuthService.isAuthenticated()) {
+            throw new Error('Usuário não autenticado');
+          }
+
+          const user = AuthService.getUser();
+          if (!user) {
+            throw new Error('Dados do usuário não encontrados');
+          }
+
+          await BelvoService.linkAccount({
+            linkId,
+            institutionName,
+            userId: user.id
+          });
+          
           logger.info('Conta vinculada com sucesso', { linkId: linkId, institutionName: institutionName });
           toast({
             title: 'Conta conectada com sucesso!',
