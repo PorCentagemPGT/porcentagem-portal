@@ -3,7 +3,7 @@
 import { CategoryLayout } from '@/components/layouts/CategoryLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import { Toggle } from '@/components/ui/Toggle';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowUpDown, Trash, MoreVertical, SquarePen, ChevronDown } from 'lucide-react';
@@ -76,17 +76,7 @@ export default function CategoryPage() {
 
   const [sortField, setSortField] = useState<'name' | 'status' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-
-  const sortedCategories = [...categoryData.categories].sort((a, b) => {
-    if (!sortField) return 0;
-
-    const aValue = a[sortField]?.toString().toLowerCase() || '';
-    const bValue = b[sortField]?.toString().toLowerCase() || '';
-
-    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-    return 0;
-  });
+  const [filterText, setFilterText] = useState('');
 
   const handleSort = (field: 'name' | 'status') => {
     if (sortField === field) {
@@ -97,7 +87,6 @@ export default function CategoryPage() {
     }
   };
 
-
   const handleToggle = (categoryId: number) => {
     setCategoryStatuses(prev => ({
       ...prev,
@@ -107,6 +96,8 @@ export default function CategoryPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColorLabel, setSelectedColorLabel] = useState<string | null>("selecione uma cor");
 
   const handleCreateCategory = () => {
     setEditingCategoryId(null);
@@ -118,10 +109,20 @@ export default function CategoryPage() {
     setModalOpen(true);
   };
 
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedColorLabel, setSelectedColorLabel] = useState<string | null>("selecione uma cor");
-
-
+    const filteredCategories = useMemo(() => {
+      return [...categoryData.categories]
+        .filter(category =>
+          category.name.toLowerCase().includes(filterText.toLowerCase())
+        )
+        .sort((a, b) => {
+          if (!sortField) return 0;
+          const aValue = a[sortField]?.toString().toLowerCase() || '';
+          const bValue = b[sortField]?.toString().toLowerCase() || '';
+          if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+          return 0;
+        });
+    }, [filterText, sortField, sortDirection]);
 
   return (
     <PrivateRoute>
@@ -156,7 +157,6 @@ export default function CategoryPage() {
               </CardDescription>
             </CardHeader>
           </Card>
-
         </div>
 
         <div className="w-1/5 mt-14">
@@ -166,13 +166,14 @@ export default function CategoryPage() {
         </div>
 
         <div className="w-1/3 mt-14">
-          <Input
-            type="text"
-            placeholder="Filter lines..."
-            className="w-full"
-          // onChange={(e) => setFiltro(e.target.value)}
-          />
-        </div>
+            <Input
+              type="text"
+              placeholder="Filter lines..."
+              className="w-full"
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </div>
 
         <Card className="mt-8">
           <CardHeader className="px-5 py-5 border-b border-gray-200">
@@ -204,7 +205,7 @@ export default function CategoryPage() {
           </CardHeader>
 
           <CardContent className="divide-y divide-gray-200">
-            {sortedCategories.map((category) => (
+            {filteredCategories.map((category) => (
               <div
                 key={category.id}
                 className="grid grid-cols-3 py-3 items-center"
@@ -265,7 +266,6 @@ export default function CategoryPage() {
               </div>
             ))}
           </CardContent>
-
         </Card>
 
         <BaseModal
