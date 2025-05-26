@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { BanknotesIcon, BellIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, BellIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon, CreditCardIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { classNames } from '@/utils/styles';
 import { Cog8ToothIcon } from '@heroicons/react/24/outline';
@@ -12,9 +12,10 @@ const navigation = [
   { title: "Menu", name: 'Home', href: '/home', icon: HomeIcon },
   { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
   { name: 'Notificações', href: '/notification', icon: BellIcon, className: 'mb-8' },
-  { title: "Ações", name: 'Minhas Categorias', href: '/categories', icon: RectangleGroupIcon },
+  { title: "Finanças", name: 'Minhas Categorias', href: '/categories', icon: RectangleGroupIcon },
   { name: 'Meus Bancos', href: '/banks', icon: BanknotesIcon },
-  { name: 'Configurações', href: '/configurations', icon: Cog8ToothIcon },
+  { name: 'Contas Belvo', href: '/belvo', icon: CreditCardIcon, className: 'mb-8' },
+  { title: "Sistema", name: 'Configurações', href: '/configurations', icon: Cog8ToothIcon },
 ];
 
 interface SidebarProps {

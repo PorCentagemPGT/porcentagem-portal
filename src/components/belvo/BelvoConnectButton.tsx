@@ -10,7 +10,11 @@ import { AuthService } from '@/services/auth.service';
 
 import type { BelvoError, BelvoEvent } from '@/types/belvo';
 
-export function BelvoConnectButton() {
+interface BelvoConnectButtonProps {
+  onSuccess?: () => void;
+}
+
+export function BelvoConnectButton({ onSuccess }: BelvoConnectButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -86,6 +90,8 @@ export function BelvoConnectButton() {
             title: 'Conta conectada com sucesso!',
             description: `Sua conta do ${institutionName} foi conectada.`,
           });
+
+          onSuccess?.();
         },
         onError: (error: Error) => {
           logger.error('Erro no widget do Belvo', { error });
@@ -134,7 +140,7 @@ export function BelvoConnectButton() {
     finally {
       setIsLoading(false);
     }
-  }, [toast]);
+  }, [onSuccess, toast]);
 
   return (
     <Button

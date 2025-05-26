@@ -3,7 +3,11 @@
 import { BelvoConnectButton } from './BelvoConnectButton';
 import { Building2 } from 'lucide-react';
 
-export function BelvoConnectCard() {
+interface BelvoConnectCardProps {
+  onSuccess?: () => void;
+}
+
+export function BelvoConnectCard({ onSuccess }: BelvoConnectCardProps) {
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow">
       <div className="p-5">
@@ -22,7 +26,7 @@ export function BelvoConnectCard() {
               Conecte suas contas bancárias de forma segura para começar a gerenciar suas finanças.
             </p>
             <div className="mt-4">
-              <BelvoConnectButton />
+              <BelvoConnectButton onSuccess={onSuccess} />
             </div>
           </div>
         </div>
