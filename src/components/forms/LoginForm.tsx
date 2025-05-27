@@ -24,7 +24,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
     try {
       await onSubmit({ email, password });
-      router.push('/dashboard'); // Redireciona para o dashboard após login
+      router.push('/home'); // Redireciona para o dashboard após login
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao realizar login');
     } finally {
