@@ -11,6 +11,25 @@ export interface BelvoLinkAccountData {
   userId: string;
 }
 
+export interface BankAccountResponseDto {
+  id: string;
+  userId: string;
+  linkId: string;
+  bankAccountId: string;
+  category: string;
+  type: string;
+  number: string;
+  name: string;
+  balance: {
+    current: number;
+    available: number;
+  };
+  currency: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface BelvoAccount {
   id: string;
   institutionName: string;
@@ -28,6 +47,62 @@ export interface BelvoAccount {
 }
 
 export class BelvoService {
+  static async listBankAccountsByLinkId(
+    linkId: string
+  ): Promise<BankAccountResponseDto[]> {
+    try {
+      const response = await api.get<BankAccountResponseDto[]>(
+        `/belvo/accounts/bank/linkId/${linkId}`
+      );
+      logger.info('Contas do link listadas com sucesso', { linkId });
+      return response.data;
+    } catch (error) {
+      logger.error('Erro ao listar contas do link', { error, linkId });
+      throw error;
+    }
+  }
+
+  static async updateBankAccounts(
+    accounts: { id: string; status: 'enabled' | 'disabled' }[]
+  ): Promise<BankAccountResponseDto[]> {
+    try {
+      const response = await api.patch<{ data: BankAccountResponseDto[] }>(
+        '/belvo/accounts/batch',
+        { accounts }
+      );
+      logger.info('Contas bancárias atualizadas com sucesso', {
+        count: accounts.length,
+      });
+      return response.data.data;
+    } catch (error) {
+      logger.error('Erro ao atualizar contas bancárias', {
+        error,
+        count: accounts.length,
+      });
+      throw error;
+    }
+  }
+
+  static async syncBankAccounts(
+    linkId: string,
+    userId: string
+  ): Promise<void> {
+    try {
+      await api.get(`/belvo/links/${linkId}/users/${userId}/account-types`);
+      logger.info('Contas bancárias sincronizadas com sucesso', {
+        linkId,
+        userId,
+      });
+    } catch (error) {
+      logger.error('Erro ao sincronizar contas bancárias', {
+        error,
+        linkId,
+        userId,
+      });
+      throw error;
+    }
+  }
+
   static async getWidgetToken(): Promise<BelvoWidgetResponse> {
     logger.info('Iniciando requisição do token do widget Belvo');
     try {
@@ -52,7 +127,7 @@ export class BelvoService {
       userId,
     });
     try {
-      await api.post('/belvo/link-account', data);
+      await api.post('/belvo/accounts/link', data);
       logger.info('Conta Belvo vinculada com sucesso', {
         linkId,
         institutionName,
@@ -73,7 +148,7 @@ export class BelvoService {
     logger.info('Iniciando listagem de contas do usuário', { userId });
     try {
       const response = await api.get<{ data: BelvoAccount[] }>(
-        `/belvo/accounts/${userId}`
+        `/belvo/accounts/link/${userId}`
       );
       logger.info('Contas do usuário listadas com sucesso', { userId });
       return response.data;

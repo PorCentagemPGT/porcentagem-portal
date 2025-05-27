@@ -33,6 +33,8 @@ export default function BelvoPage() {
     loadAccounts();
   }, []);
 
+  const user = AuthService.getUser();
+
   return (
     <BelvoLayout>
       <div className="px-4 sm:px-6 lg:px-8">
@@ -53,6 +55,7 @@ export default function BelvoPage() {
             accounts={accounts}
             isLoading={isLoading}
             onUnlink={() => loadAccounts()}
+            userId={user?.id || ''}
           />
         </div>
       </div>
