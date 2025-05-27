@@ -42,7 +42,7 @@ export default function RegisterPage() {
         description: 'Your account has been created. Welcome!',
       });
 
-      router.push('/dashboard');
+      router.push('/home');
     } catch (error) {
       toast({
         title: 'Error',

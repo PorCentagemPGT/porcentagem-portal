@@ -53,7 +53,7 @@ export default function LoginPage() {
         description: 'Welcome back!',
       });
 
-      router.push('/dashboard');
+      router.push('/home');
     } catch (error) {
       toast({
         title: 'Error',
