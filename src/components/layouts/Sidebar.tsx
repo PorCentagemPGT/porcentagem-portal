@@ -11,11 +11,11 @@ import { usePathname } from 'next/navigation';
 const navigation = [
   { title: "Menu", name: 'Home', href: '/home', icon: HomeIcon },
   { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
-  { name: 'Notificações', href: '/notification', icon: BellIcon, className: 'mb-8' },
+  // { name: 'Notificações', href: '/notification', icon: BellIcon, className: 'mb-8' },
   { title: "Finanças", name: 'Minhas Categorias', href: '/categories', icon: RectangleGroupIcon },
   { name: 'Meus Bancos', href: '/banks', icon: BanknotesIcon },
   { name: 'Contas Belvo', href: '/belvo', icon: CreditCardIcon, className: 'mb-8' },
-  { title: "Sistema", name: 'Configurações', href: '/configurations', icon: Cog8ToothIcon },
+  // { title: "Sistema", name: 'Configurações', href: '/configurations', icon: Cog8ToothIcon },
 ];
 
 interface SidebarProps {
