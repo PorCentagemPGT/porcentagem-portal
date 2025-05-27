@@ -2,10 +2,10 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { BanknotesIcon, BellIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon, CreditCardIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon, CreditCardIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { classNames } from '@/utils/styles';
-import { Cog8ToothIcon } from '@heroicons/react/24/outline';
+// import { Cog8ToothIcon } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
 
 const navigation = [
