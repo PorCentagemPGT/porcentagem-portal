@@ -83,10 +83,7 @@ export class BelvoService {
     }
   }
 
-  static async syncBankAccounts(
-    linkId: string,
-    userId: string
-  ): Promise<void> {
+  static async syncBankAccounts(linkId: string, userId: string): Promise<void> {
     try {
       await api.get(`/belvo/links/${linkId}/users/${userId}/account-types`);
       logger.info('Contas bancárias sincronizadas com sucesso', {
@@ -177,7 +174,7 @@ export class BelvoService {
   static async unlinkBank(linkId: string): Promise<void> {
     logger.info('Iniciando remoção do link do banco', { linkId });
     try {
-      await api.delete(`/belvo/link/${linkId}`);
+      await api.delete(`/belvo/accounts/link/${linkId}`);
       logger.info('Link do banco removido com sucesso', { linkId });
     } catch (error) {
       logger.error('Erro ao remover link do banco', { linkId, error });
