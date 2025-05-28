@@ -136,12 +136,6 @@ export default function CategoryPage() {
 
 
         <div className="grid grid-cols-5 gap-8 mt-14">
-          <Card className="col-span-4">
-            <CardHeader className="px-5 py-5">
-              <CardTitle className="text-base text-gray-900">Minhas Categorias</CardTitle>
-            </CardHeader>
-          </Card>
-
           <Card>
             <CardHeader className="px-6 py-5">
               <CardTitle className="text-base text-gray-900">Categorias Cadastradas</CardTitle>

@@ -6,6 +6,7 @@ import { Toggle } from '@/components/ui/Toggle';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Header } from '@/components/common/Header';
+import { Button } from '@/components/ui/button';
 
 const userData = {
   name: 'João da Silva',
@@ -67,17 +68,6 @@ export default function BankPage() {
         />
 
         <div className="grid grid-cols-5 gap-8 mt-14">
-          <div className="col-span-4 rounded-2xl bg-white shadow border border-gray-200">
-            <div className="px-5 py-5">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Meus Bancos
-              </h2>
-              <p className="text-base text-gray-900">
-                {bankData.period}
-              </p>
-            </div>
-          </div>
-
           <div className="rounded-2xl bg-white shadow border border-gray-200">
             <div className="px-6 py-5">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -88,6 +78,12 @@ export default function BankPage() {
               </h1>
             </div>
           </div>
+        </div>
+
+        <div className="w-1/5 mt-14">
+          <Button className="w-full" onClick={() => {}}>
+            Criar novo banco
+          </Button>
         </div>
 
         <div className="mt-8">
