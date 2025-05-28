@@ -1,12 +1,13 @@
 'use client';
 
-import { CategoryLayout } from '@/components/layouts/CategoryLayout';
+import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import { Toggle } from '@/components/ui/Toggle';
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowUpDown, Trash, MoreVertical, SquarePen, ChevronDown } from 'lucide-react';
+import { Header } from '@/components/common/Header';
 import {
   Card,
   CardContent,
@@ -126,20 +127,12 @@ export default function CategoryPage() {
 
   return (
     <PrivateRoute>
-      <CategoryLayout>
-        <Card className="mt-2 shadow rounded-2xl" style={{ backgroundColor: '#169DA0' }}>
-          <CardHeader className="px-10 py-6">
-            <div className="flex justify-between items-center w-full">
-              <CardTitle className="text-base font-semibold text-white">
-                Categorias
-              </CardTitle>
-              <div className="text-right">
-                <span className="block text-base text-white">{userData.name}</span>
-                <CardDescription className="text-sm text-white">{userData.email}</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
+      <DashboardLayout>
+        <Header
+          title="Categorias"
+          userName={userData.name}
+          userEmail={userData.email}
+        />
 
 
         <div className="grid grid-cols-5 gap-8 mt-14">
@@ -316,7 +309,7 @@ export default function CategoryPage() {
           </div>
         </BaseModal>
 
-      </CategoryLayout>
+      </DashboardLayout>
     </PrivateRoute>
   );
 }

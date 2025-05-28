@@ -9,9 +9,9 @@ interface BelvoConnectCardProps {
 
 export function BelvoConnectCard({ onSuccess }: BelvoConnectCardProps) {
   return (
-    <div className="overflow-hidden rounded-lg bg-white shadow">
+    <div className="overflow-hidden rounded-lg bg-white shadow w-full">
       <div className="p-5">
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
           <div className="flex-shrink-0">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
               <Building2 className="h-6 w-6 text-blue-600" />

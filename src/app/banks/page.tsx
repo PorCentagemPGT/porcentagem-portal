@@ -1,10 +1,11 @@
 'use client';
 
-import { BankLayout } from '@/components/layouts/BankLayout';
+import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import { Toggle } from '@/components/ui/Toggle';
 import { useState } from 'react';
 import Image from 'next/image';
+import { Header } from '@/components/common/Header';
 
 const userData = {
   name: 'João da Silva',
@@ -58,20 +59,12 @@ export default function BankPage() {
 
   return (
     <PrivateRoute>
-      <BankLayout>
-        <div className="rounded-2xl bg-white shadow mt-2">
-          <div className="px-40 py-3 sm:p-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Bancos
-              </h2>
-              <div className="flex flex-col mr-20">
-                <span className="text-base text-gray-600">{userData.name}</span>
-                <span className="text-sm text-gray-500">{userData.email}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <DashboardLayout>
+        <Header
+          title="Bancos"
+          userName={userData.name}
+          userEmail={userData.email}
+        />
 
         <div className="grid grid-cols-5 gap-8 mt-14">
           <div className="col-span-4 rounded-2xl bg-white shadow border border-gray-200">
@@ -133,7 +126,7 @@ export default function BankPage() {
             </div>
           </div>
         </div>
-      </BankLayout>
+      </DashboardLayout>
     </PrivateRoute>
   );
 }

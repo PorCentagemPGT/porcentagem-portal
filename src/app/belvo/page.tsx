@@ -6,6 +6,7 @@ import { BelvoAccount, BelvoService } from '@/services/belvo.service';
 import { BelvoLinkedBanksCard } from '@/components/belvo/BelvoLinkedBanksCard';
 import { BelvoConnectCard } from '@/components/belvo/BelvoConnectCard';
 import { AuthService } from '@/services/auth.service';
+import { Header } from '@/components/common/Header';
 
 export default function BelvoPage() {
   const [accounts, setAccounts] = useState<BelvoAccount[]>([]);
@@ -37,19 +38,15 @@ export default function BelvoPage() {
 
   return (
     <BelvoLayout>
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold leading-6">
-              Contas Bancárias
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Gerencie suas contas bancárias conectadas através do Belvo
-            </p>
-          </div>
+      <Header title="Contas Bancárias" userName="João da Silva" userEmail="joao@email.com" />
+      <div className="mt-8">
+        <div className="rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
+          <p className="text-sm text-gray-500">
+            Gerencie suas contas bancárias conectadas através do Belvo
+          </p>
         </div>
 
-        <div className="mt-8 space-y-8">
+        <div className="mt-8 grid gap-8">
           <BelvoConnectCard onSuccess={loadAccounts} />
           <BelvoLinkedBanksCard
             accounts={accounts}

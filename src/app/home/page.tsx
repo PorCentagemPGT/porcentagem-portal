@@ -3,6 +3,7 @@
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import { useState } from 'react';
+import { Header } from '@/components/common/Header';
 
 type SortDirection = 'asc' | 'desc' | null;
 type SortField = 'valor' | 'categoria' | 'pagamento' | 'local' | 'dataHora' | null;
@@ -68,13 +69,10 @@ export default function HomePage() {
   return (
     <PrivateRoute>
       <DashboardLayout>
+        <Header title="Home" userName="João da Silva" userEmail="joao@email.com" />
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          {/* Home Section */}
-          <div className="bg-white rounded-lg p-6 border border-gray-400">
-            <h2 className="text-lg font-medium text-gray-900">Home</h2>
-            <p className="text-sm text-gray-500 mt-1">Mês Atual</p>
-          </div>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {/* Stats boxes */}
 
           {/* Stats boxes */}
           <div className="bg-gray-50 rounded-lg p-6 border border-gray-400">

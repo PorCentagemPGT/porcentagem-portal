@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import { FiCalendar, FiFilter, FiDownload } from 'react-icons/fi';
+import { Header } from '@/components/common/Header';
 
 // Mock data for the charts
 const monthlyData = [
@@ -44,11 +45,10 @@ export default function DashboardPage() {
   return (
     <PrivateRoute>
       <DashboardLayout>
-        {/* Dashboard Header */}
-        <div className="rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
+      <Header title="Dashboard" userName="João da Silva" userEmail="joao@email.com" />
+        <div className="mt-8 rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-base font-semibold">Dashboard</h2>
               <p className="text-sm text-gray-500">Mês {selectedMonth}</p>
             </div>
             <div className="flex items-center space-x-4">

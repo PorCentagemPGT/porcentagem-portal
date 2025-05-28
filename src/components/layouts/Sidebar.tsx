@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { BanknotesIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon, CreditCardIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ChartBarIcon, HomeIcon, RectangleGroupIcon, XMarkIcon, CreditCardIcon, ArrowRightStartOnRectangleIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { classNames } from '@/utils/styles';
 // import { Cog8ToothIcon } from '@heroicons/react/24/outline';
@@ -24,7 +24,7 @@ interface SidebarProps {
   onLogout: () => void;
 }
 
-export function Sidebar({ open, setOpen }: SidebarProps) {
+export function Sidebar({ open, setOpen, onLogout }: SidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -132,6 +132,18 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
                         </li>
                       </ul>
                     </nav>
+                    <div className="mt-4 pt-4 border-t border-gray-300">
+                      <button
+                        onClick={onLogout}
+                        className="group flex w-full items-center gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                      >
+                        <ArrowRightStartOnRectangleIcon
+                          className="h-6 w-6 text-gray-400 group-hover:text-indigo-600"
+                          aria-hidden="true"
+                        />
+                        Sair
+                      </button>
+                    </div>
                   </div>
                 </div>
               </Dialog.Panel>
@@ -192,6 +204,18 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
                 </li>
               </ul>
             </nav>
+            <div className="mt-4 pt-4 border-t border-gray-300">
+              <button
+                onClick={onLogout}
+                className="group flex w-full items-center gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+              >
+                <ArrowRightStartOnRectangleIcon
+                  className="h-6 w-6 text-gray-400 group-hover:text-indigo-600"
+                  aria-hidden="true"
+                />
+                Sair
+              </button>
+            </div>
           </div>
         </div>
       </div>
