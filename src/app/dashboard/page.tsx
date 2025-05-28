@@ -49,13 +49,13 @@ export default function DashboardPage() {
         <div className="mt-8 rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
           <div className="flex justify-between items-center">
             <div>
-              <p className="text-sm text-gray-500">Mês {selectedMonth}</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div>
-                <p className="text-sm text-gray-500">Total de Gastos no mês</p>
+            <div>
+                <p className="text-sm text-gray-500">Total de Gastos</p>
                 <p className="text-2xl font-bold">R$ {totalGastos.toFixed(2).replace('.', ',')}</p>
               </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              
               <div>
                 <p className="text-sm text-gray-500 mb-2">Exportar</p>
                 <button className="px-3 py-1 bg-black text-white text-sm rounded flex items-center">
