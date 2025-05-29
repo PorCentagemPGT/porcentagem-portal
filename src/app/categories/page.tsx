@@ -11,9 +11,9 @@ import { Header } from '@/components/common/Header';
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardHeader,
-  CardTitle,
+  // CardTitle,
 } from '@/components/ui/card';
 import {
   DropdownMenu,
@@ -135,7 +135,7 @@ export default function CategoryPage() {
         />
 
 
-        <div className="grid grid-cols-5 gap-8 mt-14">
+        {/* <div className="grid grid-cols-5 gap-8 mt-14">
           <Card>
             <CardHeader className="px-6 py-5">
               <CardTitle className="text-base text-gray-900">Categorias Cadastradas</CardTitle>
@@ -144,7 +144,7 @@ export default function CategoryPage() {
               </CardDescription>
             </CardHeader>
           </Card>
-        </div>
+        </div> */}
 
         <div className="w-1/5 mt-14">
           <Button className="w-full" onClick={handleCreateCategory}>
