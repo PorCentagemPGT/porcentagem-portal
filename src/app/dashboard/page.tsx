@@ -54,9 +54,9 @@ export default function DashboardPage() {
               <input
                 type="text"
                 className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-sm"
-                placeholder="Jan 30, 2023 - Feb 30, 2023"
+                placeholder="Jan 31, 2025 - Feb 28, 2025"
                 readOnly
-                value="Jan 30, 2023 - Feb 30, 2023"
+                value="Jan 31, 2025 - Feb 28, 2025"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <FiCalendar className="h-4 w-4 text-gray-400" />

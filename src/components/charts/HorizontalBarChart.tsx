@@ -42,8 +42,8 @@ export function HorizontalBarChart({ data }: HorizontalBarChartProps) {
       style: {
         colors: ['#fff']
       },
-      formatter: function (val: number) {
-        return `R$ ${val.toFixed(2)}`;
+      formatter: function (val: string) {
+        return `R$ ${parseFloat(val).toFixed(2)}`;
       },
       offsetX: 8
     },
@@ -53,8 +53,8 @@ export function HorizontalBarChart({ data }: HorizontalBarChartProps) {
     xaxis: {
       categories: categories,
       labels: {
-        formatter: function (val: number) {
-          return `R$ ${val.toFixed(2)}`;
+        formatter: function (val: string) {
+          return `R$ ${parseFloat(val).toFixed(2)}`;
         }
       }
     },
@@ -79,7 +79,7 @@ export function HorizontalBarChart({ data }: HorizontalBarChartProps) {
         title: {
           formatter: () => 'Valor:'
         },
-        formatter: (val: number) => `R$ ${val.toFixed(2)}`
+        formatter: (val: string) => `R$ ${parseFloat(val).toFixed(2)}`
       }
     }
   };
