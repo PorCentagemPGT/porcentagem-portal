@@ -15,7 +15,7 @@ import { monthlyData, categoryData } from '@/data/mockData';
 
 export default function DashboardPage() {
   const [selectedMonth, setSelectedMonth] = useState('Atual');
-  const totalGastos = 1540.00;
+  const totalGastos = 5250.80;
 
   const handleDownloadReport = async () => {
     try {
