@@ -17,6 +17,35 @@ export default function DashboardPage() {
   const [selectedMonth, setSelectedMonth] = useState('Atual');
   const totalGastos = 1540.00;
 
+  const handleDownloadReport = async () => {
+    try {
+      const response = await fetch('/mock-transactions.csv');
+      const csvContent = await response.text();
+      
+      // Criar um blob com o conteúdo CSV
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      
+      // Criar URL temporária para o blob
+      const url = window.URL.createObjectURL(blob);
+      
+      // Criar elemento <a> temporário
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `transacoes-${new Date().toISOString().split('T')[0]}.csv`);
+      
+      // Adicionar ao documento, clicar e remover
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Limpar a URL temporária
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erro ao baixar o relatório:', error);
+      // Aqui você pode adicionar uma notificação de erro para o usuário
+    }
+  };
+
   // Calculate the maximum value for proper scaling
   const maxCategoryValue = Math.max(...categoryData.map(item => item.value));
   const maxMonthlyValue = Math.max(...monthlyData.map(item => item.value));
@@ -37,7 +66,10 @@ export default function DashboardPage() {
               
               <div>
                 <p className="text-sm text-gray-500 mb-2">Exportar</p>
-                <button className="px-3 py-1 bg-black text-white text-sm rounded flex items-center">
+                <button 
+                  onClick={handleDownloadReport}
+                  className="px-3 py-1 bg-black text-white text-sm rounded flex items-center hover:bg-gray-800 transition-colors"
+                >
                   <FiDownload className="mr-1" size={14} />
                   Exportar Relatório
                 </button>
@@ -54,9 +86,9 @@ export default function DashboardPage() {
               <input
                 type="text"
                 className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-sm"
-                placeholder="Jan 31, 2025 - Feb 28, 2025"
+                placeholder="Jan 31, 2024 - Feb 28, 2024"
                 readOnly
-                value="Jan 31, 2025 - Feb 28, 2025"
+                value="Jan 31, 2024 - Feb 28, 2024"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <FiCalendar className="h-4 w-4 text-gray-400" />
