@@ -9,8 +9,8 @@ import { Header } from '@/components/common/Header';
 import { Button } from '@/components/ui/button';
 
 const userData = {
-  name: 'João da Silva',
-  email: 'joaosilva@email.com'
+  name: 'Usuário Teste',
+  email: 'usuario@email.com'
 };
 
 const bankData = {

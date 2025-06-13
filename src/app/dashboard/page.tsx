@@ -4,35 +4,14 @@
 import { useState } from 'react';
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { PrivateRoute } from '@/components/auth/PrivateRoute';
-import { FiCalendar, FiFilter, FiDownload } from 'react-icons/fi';
 import { Header } from '@/components/common/Header';
+import { ChartCard } from '@/components/charts/ChartCard';
+import { VerticalBarChart } from '@/components/charts/VerticalBarChart';
+import { HorizontalBarChart } from '@/components/charts/HorizontalBarChart';
+import { FiCalendar, FiFilter, FiDownload } from 'react-icons/fi';
 
 // Mock data for the charts
-const monthlyData = [
-  { month: 'Jan', value: 54 },
-  { month: 'Fev', value: 195 },
-  { month: 'Mar', value: 134 },
-  { month: 'Abr', value: 123 },
-  { month: 'Mai', value: 143 },
-  { month: 'Jun', value: 145 },
-  { month: 'Jul', value: 145 },
-  { month: 'Ago', value: 165 },
-  { month: 'Set', value: 204 },
-  { month: 'Out', value: 204 },
-  { month: 'Nov', value: 182 },
-  { month: 'Dez', value: 0 },
-];
-
-const categoryData = [
-  { title: 'Título', value: 54 },
-  { title: 'Título', value: 134 },
-  { title: 'Título', value: 123 },
-  { title: 'Título', value: 145 },
-  { title: 'Título', value: 145 },
-  { title: 'Título', value: 165 },
-  { title: 'Título', value: 204 },
-  { title: 'Título', value: 204 },
-];
+import { monthlyData, categoryData } from '@/data/mockData';
 
 export default function DashboardPage() {
   const [selectedMonth, setSelectedMonth] = useState('Atual');
@@ -45,7 +24,7 @@ export default function DashboardPage() {
   return (
     <PrivateRoute>
       <DashboardLayout>
-      <Header title="Dashboard" userName="João da Silva" userEmail="joao@email.com" />
+      <Header title="Dashboard" userName="Usuário Teste" userEmail="usuario@email.com" />
         <div className="mt-8 rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
           <div className="flex justify-between items-center">
             <div>
@@ -114,63 +93,22 @@ export default function DashboardPage() {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Left Side - Vertical Bar Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="mb-4">
-              <h3 className="text-sm font-medium text-gray-700">Valor / Categoria</h3>
-              <p className="text-sm text-gray-500">Subtitle</p>
-            </div>
-            <p className="text-xl font-semibold mb-6">R$ 1540,00</p>
-            
-            {/* Vertical Bar Chart */}
-            <div className="h-64 mt-4">
-              <div className="flex h-full items-end">
-                {categoryData.map((item, index) => {
-                  const heightPercentage = (item.value / maxCategoryValue) * 100;
-                  
-                  return (
-                    <div key={index} className="flex flex-col items-center flex-1">
-                      <div 
-                        className="w-full bg-primary rounded-t"
-                        style={{ 
-                          height: `${heightPercentage}%`,
-                          minHeight: '10px'
-                        }}
-                      ></div>
-                      <span className="text-xs mt-2">{item.title}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <ChartCard
+            title="Valor / Categoria"
+            subtitle="Distribuição de gastos por categoria"
+            value={`R$ ${categoryData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}`}
+          >
+            <VerticalBarChart data={categoryData} />
+          </ChartCard>
 
           {/* Right Side - Horizontal Bar Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="mb-4">
-              <h3 className="text-sm font-medium text-gray-700">Valor / Mês</h3>
-              <p className="text-sm text-gray-500">Subtitle</p>
-            </div>
-            <p className="text-xl font-semibold mb-6">R$ 1540,00</p>
-            
-            {/* Horizontal Bar Chart */}
-            <div className="space-y-2 mt-4">
-              {monthlyData.map((item, index) => (
-                <div key={index} className="flex items-center">
-                  <div className="w-12 text-xs">{item.month}</div>
-                  <div className="flex-1 ml-2">
-                    <div className="relative">
-                      <div 
-                        className="bg-primary h-8 rounded-sm flex items-center justify-end pr-2"
-                        style={{ width: `${(item.value / maxMonthlyValue) * 100}%` }}
-                      >
-                        <span className="text-xs text-white">{item.value}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ChartCard
+            title="Valor / Mês"
+            subtitle="Distribuição de gastos por mês"
+            value={`R$ ${monthlyData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}`}
+          >
+            <HorizontalBarChart data={monthlyData} />
+          </ChartCard>
         </div>
       </DashboardLayout>
     </PrivateRoute>

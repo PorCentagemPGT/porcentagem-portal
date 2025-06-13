@@ -69,7 +69,7 @@ export default function HomePage() {
   return (
     <PrivateRoute>
       <DashboardLayout>
-        <Header title="Home" userName="João da Silva" userEmail="joao@email.com" />
+        <Header title="Home" userName="Usuário Teste" userEmail="usuario@email.com" />
         {/* Top Section */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {/* Stats boxes */}

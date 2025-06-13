@@ -27,8 +27,8 @@ import { BaseModal } from '@/components/ui/BaseModal';
 
 
 const userData = {
-  name: 'João da Silva',
-  email: 'joaosilva@email.com'
+  name: 'Usuário Teste',
+  email: 'usuario@email.com'
 };
 
 const categoryData = {

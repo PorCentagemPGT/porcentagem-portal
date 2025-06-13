@@ -38,7 +38,7 @@ export default function BelvoPage() {
 
   return (
     <BelvoLayout>
-      <Header title="Contas Bancárias" userName="João da Silva" userEmail="joao@email.com" />
+      <Header title="Contas Bancárias" userName="Usuário Teste" userEmail="usuario@email.com" />
       <div className="mt-8">
         <div className="rounded-lg border border-dashed border-purple-300 bg-white p-4 mb-6">
           <p className="text-sm text-gray-500">
