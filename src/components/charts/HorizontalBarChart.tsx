@@ -79,7 +79,7 @@ export function HorizontalBarChart({ data }: HorizontalBarChartProps) {
         title: {
           formatter: () => 'Valor:'
         },
-        formatter: (val: string) => `R$ ${parseFloat(val).toFixed(2)}`
+        formatter: (val: number) => `R$ ${val.toFixed(2)}`
       }
     }
   };
